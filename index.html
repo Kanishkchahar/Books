@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#10141d" />
+    <link rel="icon" href="logo.svg" type="image/svg+xml" />
+    <title>Quiet Shelf — Your Reading Room</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" id="brandLink" aria-label="Quiet Shelf home">
+          <span class="brand-mark"><img src="logo.svg" alt="" /></span>
+          <span>
+            <strong>Quiet Shelf</strong>
+            <small>your private reading room</small>
+          </span>
+        </a>
+        <div class="top-actions">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="librarySearch" type="search" placeholder="Search your library..." autocomplete="off" />
+            <kbd>/</kbd>
+          </label>
+          <button class="icon-button" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">☼</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">A slower way to read</p>
+            <h1>Make room for<br /><em>good stories.</em></h1>
+            <p class="hero-copy">Four books, one calm place to think, learn, and get lost for a while.</p>
+            <button class="primary-button" id="resumeButton">Continue reading <span>→</span></button>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="sun"></div>
+            <div class="hill hill-back"></div>
+            <div class="hill hill-front"></div>
+            <div class="leaf leaf-one"></div>
+            <div class="leaf leaf-two"></div>
+            <div class="leaf leaf-three"></div>
+          </div>
+        </section>
+
+        <section class="continue-card hidden" id="continueCard">
+          <div class="continue-cover" id="continueCover"></div>
+          <div class="continue-copy"><p class="eyebrow">Pick up where you left off</p><h2 id="continueTitle">Continue reading</h2><p id="continueMeta"></p><div class="continue-progress"><span id="continueProgress"></span></div></div>
+          <button class="primary-button" id="continueCardButton">Open book <span>→</span></button>
+        </section>
+
+        <section class="stats-row" aria-label="Reading stats">
+          <div><strong id="bookCount">4</strong><span>books on shelf</span></div>
+          <div><strong id="pagesRead">0</strong><span>pages explored</span></div>
+          <div><strong id="readingStreak">0</strong><span>day reading streak</span></div>
+          <div class="quote-card"><span>“</span><p id="dailyQuote">A room without books is like a body without a soul.</p><small>— Cicero</small></div>
+        </section>
+
+        <section class="library-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Your collection</p>
+              <h2>Bookshelf</h2>
+            </div>
+            <div class="view-controls">
+              <button class="filter-button active" data-filter="all">All books</button>
+              <button class="filter-button" data-filter="progress">In progress</button>
+            </div>
+          </div>
+          <div class="book-grid" id="bookGrid"></div>
+          <p class="empty-state hidden" id="emptyState">No books match your search.</p>
+        </section>
+      </main>
+
+      <footer><span>Quiet Shelf</span><span>Everything stays in this browser.</span></footer>
+    </div>
+
+    <div class="reader-overlay hidden" id="readerOverlay">
+      <header class="reader-topbar" id="readerChrome">
+        <button class="back-button" id="closeReader" title="Back to library">← <span>Library</span></button>
+        <div class="reader-title">
+          <strong id="readerBookTitle">Book</strong>
+          <span id="readerPageLabel">Page 1 of 1</span>
+        </div>
+        <div class="reader-actions">
+          <button class="reader-icon" id="navigationToggle" title="Pages and contents" aria-label="Pages and contents">▥</button>
+          <button class="reader-icon" id="searchToggle" title="Search in book" aria-label="Search in book">⌕</button>
+          <button class="reader-icon" id="bookmarkButton" title="Bookmark this page" aria-label="Bookmark this page">☆</button>
+          <button class="reader-icon" id="bookmarksToggle" title="View bookmarks" aria-label="View bookmarks">▥</button>
+          <button class="reader-icon" id="notesToggle" title="Open notes" aria-label="Open notes">▤</button>
+          <button class="reader-icon" id="readAloudButton" title="Read page aloud" aria-label="Read page aloud">◖</button>
+          <button class="reader-icon" id="helpToggle" title="Keyboard shortcuts" aria-label="Keyboard shortcuts">?</button>
+          <button class="reader-icon" id="fullscreenButton" title="Fullscreen" aria-label="Toggle fullscreen">⛶</button>
+        </div>
+        <div class="reader-controls">
+          <button id="prevPage" title="Previous page" aria-label="Previous page">‹</button>
+          <input id="pageInput" type="number" min="1" value="1" aria-label="Go to page" />
+          <span id="pageTotal">/ 1</span>
+          <button id="nextPage" title="Next page" aria-label="Next page">›</button>
+          <span class="toolbar-divider"></span>
+          <button id="zoomOut" title="Zoom out" aria-label="Zoom out">−</button>
+          <span id="zoomLabel">Fit width</span>
+          <button id="zoomIn" title="Zoom in" aria-label="Zoom in">+</button>
+          <button id="fitWidth" class="toolbar-text-button" aria-label="Fit page to width">Fit width</button>
+          <button id="fitPage" class="toolbar-text-button" aria-label="Fit full page">Fit page</button>
+          <button id="actualSize" class="toolbar-text-button" aria-label="Use actual page size">Actual size</button>
+          <label class="mode-control" title="Page layout">View
+            <select id="viewMode" aria-label="Page layout">
+              <option value="continuous">Continuous</option><option value="spread">Two page</option><option value="single">Single page</option>
+            </select>
+          </label>
+          <span class="toolbar-divider"></span>
+          <label class="mode-control" title="Page color mode">Mode
+            <select id="pageMode" aria-label="Page color mode">
+              <option value="normal">Normal</option><option value="dark">Dark</option><option value="sepia">Sepia</option><option value="warm">Warm night</option>
+            </select>
+          </label>
+          <label class="brightness-control" title="Page brightness">☼ <input id="brightnessRange" type="range" min="65" max="125" value="100" aria-label="Page brightness" /></label>
+        </div>
+      </header>
+      <div class="reader-body">
+        <div class="pdf-stage" id="pdfStage">
+          <div class="loading-state" id="loadingState"><div class="spinner"></div><span>Opening your book...</span></div>
+          <div class="page-stack" id="pageStack"></div>
+        </div>
+        <aside class="notes-panel" id="notesPanel">
+          <div class="panel-heading"><strong>Book notes</strong><button id="closeNotes">×</button></div>
+          <p class="panel-hint">Capture a thought while it is fresh. Notes are saved in this browser.</p>
+          <textarea id="notesInput" placeholder="Write a note about this book..."></textarea>
+          <button class="save-note" id="saveNote">Save note</button>
+          <button class="export-notes" id="exportNotes">Export Markdown</button>
+          <div id="notesList"></div>
+        </aside>
+        <aside class="bookmarks-panel" id="bookmarksPanel">
+          <div class="panel-heading"><strong>Saved pages</strong><button id="closeBookmarks">×</button></div>
+          <p class="panel-hint">Keep the passages you want to return to.</p>
+          <div id="bookmarksList"></div>
+        </aside>
+        <aside class="navigation-panel" id="navigationPanel">
+          <div class="panel-heading"><strong>Book navigation</strong><button id="closeNavigation" aria-label="Close navigation">×</button></div>
+          <div class="navigation-tabs">
+            <button class="navigation-tab active" data-nav="thumbs">Pages</button>
+            <button class="navigation-tab" data-nav="outline">Contents</button>
+          </div>
+          <div id="thumbnailList" class="thumbnail-list"></div>
+          <div id="outlineList" class="outline-list hidden"></div>
+        </aside>
+      </div>
+      <div class="reader-bottom-bar" id="readerBottomBar">
+        <input id="progressRange" type="range" min="1" max="1" value="1" aria-label="Reading progress" />
+        <span id="progressSummary">Page 1 of 1 · about 0 min left</span>
+      </div>
+      <div class="search-panel hidden" id="searchPanel">
+        <input id="readerSearch" type="search" placeholder="Search in this book..." />
+        <span id="searchStatus"></span>
+        <button id="closeSearch">×</button>
+      </div>
+      <div class="help-panel hidden" id="helpPanel">
+        <div class="panel-heading"><strong>Keyboard shortcuts</strong><button id="closeHelp" aria-label="Close help">×</button></div>
+        <p><kbd>←</kbd> <kbd>→</kbd> Previous / next page</p>
+        <p><kbd>T</kbd> Pages and contents</p><p><kbd>S</kbd> Search</p>
+        <p><kbd>B</kbd> Bookmark · <kbd>N</kbd> Notes · <kbd>F</kbd> Fullscreen</p>
+        <p><kbd>?</kbd> Show this help</p>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
